@@ -1,11 +1,14 @@
 package shop.mtcoding.newblog.controller;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +23,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import shop.mtcoding.newblog.dto.board.BoardResp.BoardMainRespDto;
-import shop.mtcoding.newblog.model.BoardRepository;
+import shop.mtcoding.newblog.dto.board.BoardResp;
 import shop.mtcoding.newblog.model.User;
 
 @AutoConfigureMockMvc
@@ -30,6 +32,8 @@ public class BoardControllerTest {
 
     @Autowired
     private MockMvc mvc;
+    @Autowired
+    private ObjectMapper om;
 
     private MockHttpSession mockSession;
 
@@ -44,6 +48,24 @@ public class BoardControllerTest {
 
         mockSession = new MockHttpSession();
         mockSession.setAttribute("principal", user);
+    }
+
+    @Test
+    public void main_test() throws Exception {
+        // given
+
+        // when
+        ResultActions resultActions = mvc.perform(
+                get("/"));
+        Map<String, Object> map = resultActions.andReturn().getModelAndView().getModel();
+        List<BoardResp.BoardMainRespDto> dtos = (List<BoardResp.BoardMainRespDto>) map.get("dtos");
+        String model = om.writeValueAsString(dtos);
+        System.out.println("테스트 : " + model);
+        // then
+        resultActions.andExpect(status().isOk());
+        assertThat(dtos.size()).isEqualTo(6);
+        assertThat(dtos.get(0).getUsername()).isEqualTo("ssar");
+        assertThat(dtos.get(0).getTitle()).isEqualTo("1번째 제목");
     }
 
     @Test
