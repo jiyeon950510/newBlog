@@ -2,21 +2,23 @@
 <%@ include file="../layout/header.jsp" %>
 
 <div class="container my-3">
+    <c:if test="${dto.userId == principal.id}" >
         <div class="mb-3">
-            <a href="#" class="btn btn-warning">수정</a>
+            <a href="/board/${dto.id}/updateForm" class="btn btn-warning">수정</a>
             <button id="btn-delete" class="btn btn-danger">삭제</button>
         </div>
+    </c:if>
 
         <div class="mb-2">
-            글 번호 : <span id="id"><i>3 </i></span> 작성자 : <span><i>ssar </i></span>
+            글 번호 : <span id="id"><i>${dto.id}</i></span> 작성자 : <span><i>${dto.username}</i></span>
         </div>
 
         <div>
-            <h3>제목입니다</h3>
+            <h3>${dto.title}</h3>
         </div>
         <hr />
         <div>
-            <div>내용입니다</div>
+            <div>${dto.content}</div>
         </div>
         <hr />
 

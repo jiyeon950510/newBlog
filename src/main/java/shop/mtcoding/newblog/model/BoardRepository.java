@@ -22,4 +22,6 @@ public interface BoardRepository {
                         @Param("content") String content);
 
         public int deleteById(int id);
+
+        public Object findByIdWithUser(int id);
 }
