@@ -1,7 +1,17 @@
 package shop.mtcoding.newblog.handler.ex;
 
+import org.springframework.http.HttpStatus;
+
 public class CustomException extends RuntimeException {
-    public CustomException(String msg) {
+
+    private HttpStatus status;
+
+    public CustomException(String msg, HttpStatus status) {
         super(msg);
+        this.status = status;
+    }
+
+    public CustomException(String msg) {
+        this(msg, HttpStatus.BAD_REQUEST);
     }
 }

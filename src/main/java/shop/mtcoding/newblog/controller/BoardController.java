@@ -37,7 +37,7 @@ public class BoardController {
         if (boardSaveReqDto.getContent() == null || boardSaveReqDto.getContent().isEmpty()) {
             throw new CustomException("password을 작성해주세요");
         }
-        int result = boardService.글쓰기(boardSaveReqDto, principal.getId());
+        boardService.글쓰기(boardSaveReqDto, principal.getId());
         return "redirect:/";
     }
 
