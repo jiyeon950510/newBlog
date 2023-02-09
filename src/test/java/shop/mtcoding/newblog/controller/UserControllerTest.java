@@ -18,13 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import shop.mtcoding.newblog.model.User;
 
-/*
- * SpringBootTest는 통합테스트 (실제 환경과 동일하게 Bean 이 생성됨)
- * AutoConfigureMockMvc 는 mock 환경의 IoC 컨테이너에 MockMvc Bean 이 생성됨
- */
-
-// @WebMvcTest 가짜 테스트
-@AutoConfigureMockMvc // MockMvc를 ioc에 띄워줌
+@AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 public class UserControllerTest {
 
