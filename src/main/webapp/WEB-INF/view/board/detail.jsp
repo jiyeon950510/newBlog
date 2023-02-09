@@ -8,7 +8,6 @@
             <button id="btn-delete" class="btn btn-danger">삭제</button>
         </div>
     </c:if>
-
         <div class="mb-2">
             글 번호 : <span id="id"><i>${dto.id}</i></span> 작성자 : <span><i>${dto.username}</i></span>
         </div>
