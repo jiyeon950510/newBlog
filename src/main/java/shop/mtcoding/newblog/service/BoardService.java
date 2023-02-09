@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardSaveReqDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
-import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.Board;
 import shop.mtcoding.newblog.model.BoardRepository;
+import shop.mtcoding.newblog.util.HtmlParser;
 
 @Service
 public class BoardService {
@@ -20,9 +20,11 @@ public class BoardService {
 
     @Transactional
     public void 글쓰기(BoardSaveReqDto boardSaveReqDto, int userId) {
-        int result = boardRepository.insert(boardSaveReqDto.getTitle(), boardSaveReqDto.getContent(), userId);
+        String thumbnail = HtmlParser.getThumbnail(boardSaveReqDto.getContent());
+        int result = boardRepository.insert(boardSaveReqDto.getTitle(), boardSaveReqDto.getContent(), thumbnail,
+                userId);
         if (result != 1) {
-            throw new CustomException("글쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new CustomApiException("글쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -52,7 +54,10 @@ public class BoardService {
         if (boardPS.getUserId() != principalId) {
             throw new CustomApiException("게시글을 수정할 권한이 없습니다.", HttpStatus.FORBIDDEN);
         }
-        int result = boardRepository.updateById(id, boardUpdateReqDto.getTitle(), boardUpdateReqDto.getContent());
+        BoardSaveReqDto boardSaveReqDto = new BoardSaveReqDto();
+        String thumbnail = HtmlParser.getThumbnail(boardSaveReqDto.getContent());
+        int result = boardRepository.updateById(id, boardUpdateReqDto.getTitle(), boardUpdateReqDto.getContent(),
+                thumbnail);
         if (result != 1) {
             throw new CustomApiException("게시글 수정에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
