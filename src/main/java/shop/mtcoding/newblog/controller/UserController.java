@@ -28,7 +28,7 @@ public class UserController {
 
     @PostMapping("/login")
     public String login(LoginReqDto loginReqDto) {
-        if (loginReqDto.getUsername() == null ||  loginReqDto.getUsername().isEmpty()) {
+        if (loginReqDto.getUsername() == null || loginReqDto.getUsername().isEmpty()) {
             throw new CustomException("username을 작성해주세요");
         }
 
