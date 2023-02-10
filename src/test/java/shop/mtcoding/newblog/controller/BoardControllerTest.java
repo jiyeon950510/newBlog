@@ -147,6 +147,7 @@ public class BoardControllerTest {
 
         // then
         resultActions.andExpect(status().is3xxRedirection());
+
     }
 
 }
