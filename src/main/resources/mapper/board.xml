@@ -14,7 +14,7 @@
     </select>    
 
     <insert id="insert">
-        insert into board_tb (title, content, thumbnail, user_id, created_at) values(#{title}, #{content}, #{thumbnail}, #{userId}, now())
+        insert into board_tb (title, content, thumbnail, user_id, created_at) values(#{boardSaveReqDto.title}, #{boardSaveReqDto.content}, #{thumbnail}, #{userId}, now())
     </insert>    
 
     <delete id="deleteById" >

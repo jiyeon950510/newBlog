@@ -20,9 +20,11 @@ public class BoardService {
 
     @Transactional
     public void 글쓰기(BoardSaveReqDto boardSaveReqDto, int userId) {
+
         String thumbnail = HtmlParser.getThumbnail(boardSaveReqDto.getContent());
-        int result = boardRepository.insert(boardSaveReqDto.getTitle(), boardSaveReqDto.getContent(), thumbnail,
-                userId);
+
+        int result = boardRepository.insert(boardSaveReqDto,
+                userId, thumbnail);
         if (result != 1) {
             throw new CustomApiException("글쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
