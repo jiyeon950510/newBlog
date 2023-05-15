@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="shop.mtcoding.newblog.model.ReplyRepository">
+   <select id="findAll" resultType="shop.mtcoding.newblog.model.Reply">
+      select * from reply_tb
+   </select>
+   <select id="findById" resultType="shop.mtcoding.newblog.model.Reply">
+      select * from reply_tb where id = #{id}
+   </select>
+   <insert id="insert">
+      insert into reply_tb(comment, board_id, user_id, created_at) values(#{comment}, #{boardId}, #{userId}, now())
+   </insert>
+   <delete id="deleteById">
+      delete from reply_tb where id = #{id}
+   </delete>   
+   <update id="updateById">
+      update reply_tb set comment = #{comment}, board_id = #{boardId}, user_id = #{userId} where id = #{id}
+   </update>
+</mapper>
