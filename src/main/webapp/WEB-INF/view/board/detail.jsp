@@ -12,21 +12,6 @@
                         글 번호 : <span id="id"><i>${board.id}</i></span> 작성자 : <span><i>${board.username}</i></span>
                     </div>
 
-                    <script>
-                        function deleteById(id) {
-                            $.ajax({
-                                type: "delete",
-                                url: "/board/" + id,
-                                dataType: "json"
-                            }).done((res) => { // 20X 일때
-                                alert(res.msg);
-                                location.href = "/";
-                            }).fail((err) => { // 40X, 50X 일때
-                                alert(err.responseJSON.msg);
-                            });
-                        }
-                    </script>
-
                     <div>
                         <h3>${board.title}</h3>
                     </div>
@@ -62,5 +47,32 @@
                     </ul>
                 </div>
             </div>
+               <script>
+                        function deleteById(boardId) {
+                            $.ajax({
+                                type: "delete",
+                                url: "/board/" + boardId,
+                                dataType: "json"
+                            }).done((res) => { // 20X 일때
+                                alert(res.msg);
+                                location.href = "/";
+                            }).fail((err) => { // 40X, 50X 일때
+                                alert(err.responseJSON.msg);
+                            });
+                        }
+
+                        function deleteReply(replyId) {
+                            $.ajax({
+                                type: "delete",
+                                url: "/reply/" + replyId,
+                                dataType: "json"
+                            }).done((res) => { // 20X 일때
+                                alert(res.msg);
+                                location.href = "/board/"+boardId;
+                            }).fail((err) => { // 40X, 50X 일때
+                                alert(err.responseJSON.msg);
+                            });
+                        }
+                    </script>
 
         <%@ include file="../layout/footer.jsp" %>
