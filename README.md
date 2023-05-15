@@ -14,7 +14,18 @@
 
 ## 기능정리
 ### 1단계
-회원가입, 로그인, 글쓰기, 글목록보기(섬네일제외), 글상세보기, 글삭제, 글수정, 섬네일보기
+#### 회원가입
+![회원가입](https://github.com/jiyeon950510/newBlog/assets/122354247/8da6316c-9184-4cd6-89e8-b1812b5b35cf)
+#### 로그인
+![로그인](https://github.com/jiyeon950510/newBlog/assets/122354247/6d241b08-75fa-430a-a918-64fe7865f688)
+#### 글쓰기
+![글쓰기](https://github.com/jiyeon950510/newBlog/assets/122354247/9e2d5c2a-63be-4e9e-97b0-7cdeeab5dc66)
+#### 글 목록보기-글 상세보기
+![글-목록_-상세보기](https://github.com/jiyeon950510/newBlog/assets/122354247/f63c5cc7-0da4-403e-9f66-bd84948de3cb)
+#### 글삭제
+
+#### 글수정
+
 ### 2단계
 댓글쓰기, 댓글목록보기, 댓글삭제, 프로필사진추가및변경하기, 프로필사진보기
 ### 3단계
