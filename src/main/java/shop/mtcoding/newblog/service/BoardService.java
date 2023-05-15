@@ -65,6 +65,7 @@ public class BoardService {
         }
     }
 
+    @Transactional
     public BoardDetailRespDto 글상세보기(int id) {
         BoardDetailRespDto boardDto = boardRepository.findByIdWithUser(id);
         if (boardDto == null) {

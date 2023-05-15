@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,15 +17,18 @@ import shop.mtcoding.newblog.dto.user.UserReq.LoginReqDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.User;
+import shop.mtcoding.newblog.model.UserRepository;
 import shop.mtcoding.newblog.service.UserService;
 
 @Controller
 public class UserController {
 
     @Autowired
+    private HttpSession session;
+    @Autowired
     private UserService userService;
     @Autowired
-    private HttpSession session;
+    private UserRepository userRepository;
 
     @GetMapping("user/updateForm")
     public String updateForm() {
@@ -66,6 +70,17 @@ public class UserController {
         }
         userService.회원가입(joinReqDto);
         return "redirect:/";
+    }
+
+    @GetMapping("/user/profileUpdateForm")
+    public String profileUpdateForm(Model model) {
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null) {
+            return "redirect:/loginForm";
+        }
+        User userPS = userRepository.findById(principal.getId());
+        model.addAttribute("user", userPS);
+        return "user/profileForm";
     }
 
     @GetMapping("joinForm")
