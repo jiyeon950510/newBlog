@@ -22,7 +22,7 @@
     </delete>    
 
     <update id="updateById" >
-        update board_tb set title= #{title},content= #{content}, thumbnail=#{thumbnail} where id = #{id} 
+        update board_tb set title= #{boardUpdateReqDto.title},content= #{boardUpdateReqDto.content}, thumbnail=#{thumbnail} where id = #{id} 
     </update> 
 
     <select id="findAllWithUser" resultType="shop.mtcoding.newblog.dto.board.BoardResp$BoardMainRespDto">

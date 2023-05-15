@@ -19,6 +19,6 @@ public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomApiException.class)
     public ResponseEntity<?> CustomApiException(CustomApiException e) {
-        return new ResponseEntity<>(new ResponseDto<>(-1, e.getMessage(), null), e.getStatus());
+        return new ResponseEntity<>(Script.back(e.getMessage()), e.getStatus());
     }
 }

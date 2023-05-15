@@ -3,10 +3,14 @@ package shop.mtcoding.newblog.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import shop.mtcoding.newblog.dto.ResponseDto;
 import shop.mtcoding.newblog.dto.user.UserReq.JoinReqDto;
 import shop.mtcoding.newblog.dto.user.UserReq.LoginReqDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
@@ -61,7 +65,7 @@ public class UserController {
             throw new CustomApiException("email을 작성해주세요");
         }
         userService.회원가입(joinReqDto);
-        return "redirect:/loginForm";
+        return "redirect:/";
     }
 
     @GetMapping("joinForm")
