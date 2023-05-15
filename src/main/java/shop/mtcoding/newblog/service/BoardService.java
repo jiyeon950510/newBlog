@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardSaveReqDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardUpdateReqDto;
+import shop.mtcoding.newblog.dto.board.BoardResp.BoardDetailRespDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.model.Board;
 import shop.mtcoding.newblog.model.BoardRepository;
@@ -62,6 +63,14 @@ public class BoardService {
         if (result != 1) {
             throw new CustomApiException("게시글 수정에 실패하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public BoardDetailRespDto 글상세보기(int id) {
+        BoardDetailRespDto boardDto = boardRepository.findByIdWithUser(id);
+        if (boardDto == null) {
+            throw new CustomApiException("존재하지 않는 게시물 입니다");
+        }
+        return boardDto;
     }
 
 }

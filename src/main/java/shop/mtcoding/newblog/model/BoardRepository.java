@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardSaveReqDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardUpdateReqDto;
+import shop.mtcoding.newblog.dto.board.BoardResp.BoardDetailRespDto;
 import shop.mtcoding.newblog.dto.board.BoardResp.BoardMainRespDto;
 
 @Mapper
@@ -25,5 +26,5 @@ public interface BoardRepository {
 
         public int deleteById(int id);
 
-        public Object findByIdWithUser(int id);
+        public BoardDetailRespDto findByIdWithUser(int id);
 }

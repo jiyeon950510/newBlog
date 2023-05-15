@@ -19,4 +19,12 @@
    <update id="updateById">
       update reply_tb set comment = #{comment}, board_id = #{boardId}, user_id = #{userId} where id = #{id}
    </update>
+
+   <select id="findByBoardId" resultType="shop.mtcoding.newblog.dto.reply.ReplyResp$ReplyDetailRespDto">
+       select rt.id, rt.comment, rt.board_id, rt.user_id, ut.username
+      from (select * from reply_tb where board_id = #{id}) rt
+      inner join user_tb ut
+      on rt.user_id = ut.id
+   </select>
+
 </mapper>

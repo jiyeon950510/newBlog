@@ -1,5 +1,7 @@
 package shop.mtcoding.newblog.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -19,12 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import shop.mtcoding.newblog.dto.ResponseDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardSaveReqDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardUpdateReqDto;
+import shop.mtcoding.newblog.dto.board.BoardResp.BoardDetailRespDto;
+import shop.mtcoding.newblog.dto.reply.ReplyResp.ReplyDetailRespDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.Board;
 import shop.mtcoding.newblog.model.BoardRepository;
 import shop.mtcoding.newblog.model.User;
 import shop.mtcoding.newblog.service.BoardService;
+import shop.mtcoding.newblog.service.ReplyService;
 
 @Controller
 public class BoardController {
@@ -34,6 +39,8 @@ public class BoardController {
     private BoardService boardService;
     @Autowired
     private BoardRepository boardRepository;
+    @Autowired
+    private ReplyService replyService;
 
     @DeleteMapping("/board/{id}")
     public @ResponseBody ResponseEntity<?> delete(@PathVariable int id) {
@@ -112,7 +119,10 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable int id, Model model) {
-        model.addAttribute("dto", boardRepository.findByIdWithUser(id));
+        BoardDetailRespDto board = boardService.글상세보기(id);
+        model.addAttribute("board", board);
+        List<ReplyDetailRespDto> replyDtoList = replyService.getReplyList(board.getId());
+        model.addAttribute("replyDtoList", replyDtoList);
         return "board/detail";
     }
 
