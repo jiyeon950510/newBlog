@@ -9,7 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import shop.mtcoding.newblog.dto.ResponseDto;
 import shop.mtcoding.newblog.dto.user.UserReq.JoinReqDto;
@@ -29,6 +31,29 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+
+    @PutMapping("/user/profileUpdate")
+    public ResponseEntity<?> profileUpdate(MultipartFile profile) {
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null) {
+            throw new CustomApiException("잘못된 접근입니다. 로그인 후 이용해주세요", HttpStatus.UNAUTHORIZED);
+        }
+
+        if (profile.isEmpty()) {
+            throw new CustomApiException("사진이 전송되지 않았습니다.");
+        }
+
+        // 사진이 아니면 Exception 터트리기
+        System.out.println(profile.getContentType());
+        if (!profile.getContentType().startsWith("image")) {
+            throw new CustomApiException("이미지 파일만 등록이 가능합니다.");
+        }
+
+        User userPS = userService.프로필사진수정(principal.getId(), profile);
+        session.setAttribute("principal", userPS);
+
+        return new ResponseEntity<>(new ResponseDto<>(1, "프로필 수정이 완료되었습니다.", null), HttpStatus.OK);
+    }
 
     @GetMapping("user/updateForm")
     public String updateForm() {

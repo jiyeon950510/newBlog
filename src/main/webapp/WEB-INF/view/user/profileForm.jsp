@@ -58,6 +58,24 @@
         </div>
 
         <script>
+            function updateImage() {
+                let profileForm = $('#profileForm')[0];
+                let formData = new FormData(profileForm);
+                $.ajax({
+                    type: "put",
+                    url: "/user/profileUpdate",
+                    data: formData,
+                    enctype: "multipart/form-data",
+                    dataType: "json"
+                })
+                    .done((res) => {
+                        alert(res.msg);
+                        location.href = "/";
+                    })
+                    .fail((err) => {
+                        alert(err.responseJSON.msg);
+                    });
+            }
             function chooseImage(obj) {
 
                 let f = obj.files[0];
