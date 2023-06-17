@@ -3,7 +3,7 @@
 
 <div class="container my-3">
         <div class="container">
-            <form>
+            <form action="" method="post">
                 <div class="form-group mb-2">
                     <input type="text" name="username" class="form-control" placeholder="Enter username" id="username"
                         value="ssar">
@@ -19,7 +19,7 @@
                         value="ssar@nate.com">
                 </div>
 
-                <button type="button" class="btn btn-primary">회원수정</button>
+                <button type="submit" class="btn btn-primary">회원수정</button>
             </form>
 
         </div>

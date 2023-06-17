@@ -42,8 +42,9 @@ public class UserService {
         return principal;
     }
 
-    public User 프로필사진수정(int id, MultipartFile profile) {
-        User userPS = userRepository.findById(id);
+    @Transactional
+    public User 프로필사진수정(int principalId, MultipartFile profile) {
+        User userPS = userRepository.findById(principalId);
         if (userPS == null) {
             throw new CustomApiException("회원정보가 존재하지 않습니다.");
         }
@@ -56,7 +57,7 @@ public class UserService {
             userRepository.updateById(userPS.getId(), userPS.getUsername(), userPS.getPassword(), userPS.getEmail(),
                     userPS.getProfile(), userPS.getCreatedAt());
         } catch (Exception e) {
-            throw new CustomApiException("사진을 웹서버에 저장하지 못하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR); // 500번 에러
+            throw new CustomException("사진을 웹서버에 저장하지 못하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR); // 500번 에러
         }
 
         return userPS;

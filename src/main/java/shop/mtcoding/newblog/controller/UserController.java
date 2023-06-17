@@ -2,6 +2,7 @@ package shop.mtcoding.newblog.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.h2.engine.SysProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,27 +33,25 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PutMapping("/user/profileUpdate")
-    public ResponseEntity<?> profileUpdate(MultipartFile profile) {
+    @PostMapping("/user/profileUpdate")
+    public String profileUpdate(MultipartFile profile) {
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
-            throw new CustomApiException("잘못된 접근입니다. 로그인 후 이용해주세요", HttpStatus.UNAUTHORIZED);
+            throw new CustomException("잘못된 접근입니다. 로그인 후 이용해주세요", HttpStatus.UNAUTHORIZED);
         }
 
         if (profile.isEmpty()) {
-            throw new CustomApiException("사진이 전송되지 않았습니다.");
+            throw new CustomException("사진이 전송되지 않았습니다.");
         }
 
         // 사진이 아니면 Exception 터트리기
-        System.out.println(profile.getContentType());
         if (!profile.getContentType().startsWith("image")) {
-            throw new CustomApiException("이미지 파일만 등록이 가능합니다.");
+            throw new CustomException("이미지 파일만 등록이 가능합니다.");
         }
-
         User userPS = userService.프로필사진수정(principal.getId(), profile);
         session.setAttribute("principal", userPS);
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "프로필 수정이 완료되었습니다.", null), HttpStatus.OK);
+        return "redirect:/";
     }
 
     @GetMapping("user/updateForm")
@@ -94,7 +93,7 @@ public class UserController {
             throw new CustomApiException("email을 작성해주세요");
         }
         userService.회원가입(joinReqDto);
-        return "redirect:/";
+        return "redirect:/loginForm";
     }
 
     @GetMapping("/user/profileUpdateForm")

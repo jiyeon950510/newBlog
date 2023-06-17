@@ -29,6 +29,7 @@
                     data: JSON.stringify(data),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json"
+                    
                 }).done((res) => {
                     alert(res.msg);
                     location.href = "/board/" + id;

@@ -45,37 +45,41 @@
 
         <div class="container my-3">
             <h2 class="text-center">프로필 사진 변경 페이지</h2>
-            <form id="profileForm">
+            <form action="/user/profileUpdate" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <img src="${user.profile == null ? '/images/profile.jfif' : user.profile}" alt="Current Photo"
+                    <img src="${principal.profile == null ? '/images/profile.jfif' : principal.profile}" alt="Current Photo"
                         class="img-fluid" id="imagePreview">
                 </div>
                 <div class="form-group">
                     <input type="file" class="form-control" id="profile" name="profile" onchange="chooseImage(this)">
                 </div>
-                <button type="button" class="btn btn-primary" onclick="updateImage()">사진변경</button>
+                <button type="submit" class="btn btn-primary">사진변경</button>
             </form>
         </div>
 
         <script>
             function updateImage() {
-                let profileForm = $('#profileForm')[0];
-                let formData = new FormData(profileForm);
+            let profileForm = $("#profileForm")[0];
+            let formData = new FormData(profileForm);
+            console.log("실행");
                 $.ajax({
                     type: "put",
                     url: "/user/profileUpdate",
                     data: formData,
+                    contentType: false,
+                    processData: false,
                     enctype: "multipart/form-data",
                     dataType: "json"
-                })
-                    .done((res) => {
-                        alert(res.msg);
-                        location.href = "/";
-                    })
-                    .fail((err) => {
-                        alert(err.responseJSON.msg);
-                    });
+                }).done((res) => {
+                    console.log('성공');
+                    alert(res.msg);
+                    location.href="/"; // 페이지 이동
+                }).fail((err) => {
+                    console.log('실패');
+                    alert(err.responseJSON.msg);
+                });
             }
+
             function chooseImage(obj) {
 
                 let f = obj.files[0];
@@ -87,13 +91,12 @@
                 }
 
                 let reader = new FileReader();
-
                 reader.readAsDataURL(f);
 
-                reader.onload = (e) => {
+                reader.onload = function(e){
                     document.querySelector(`#imagePreview`).setAttribute("src", e.target.result);
                     console.log(e); // context의 정보
-                };
+                }
             }
         </script>
         <%@ include file="../layout/footer.jsp" %>
