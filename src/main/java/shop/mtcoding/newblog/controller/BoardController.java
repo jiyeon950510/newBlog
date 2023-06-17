@@ -27,6 +27,8 @@ import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.Board;
 import shop.mtcoding.newblog.model.BoardRepository;
+import shop.mtcoding.newblog.model.Love;
+import shop.mtcoding.newblog.model.LoveRepository;
 import shop.mtcoding.newblog.model.User;
 import shop.mtcoding.newblog.service.BoardService;
 import shop.mtcoding.newblog.service.ReplyService;
@@ -41,6 +43,8 @@ public class BoardController {
     private BoardRepository boardRepository;
     @Autowired
     private ReplyService replyService;
+    @Autowired
+    private LoveRepository loveRepository;
 
     @DeleteMapping("/board/{id}")
     public @ResponseBody ResponseEntity<?> delete(@PathVariable int id) {
@@ -96,7 +100,6 @@ public class BoardController {
         if (principal == null) {
             throw new CustomApiException("인증이 되지 않았습니다", HttpStatus.UNAUTHORIZED);
         }
-        System.out.println("테스트");
         if (BoardSaveReqDto.getTitle() == null || BoardSaveReqDto.getTitle().isEmpty()) {
             throw new CustomApiException("title을 작성해주세요");
         }
@@ -119,10 +122,19 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable int id, Model model) {
+
+        User principal = (User) session.getAttribute("principal");
+        if (principal != null) {
+            Love love = loveRepository.findByBoardIdAndUserIdLove(id, principal.getId());
+            model.addAttribute("love", love);
+        }
+
         BoardDetailRespDto board = boardService.글상세보기(id);
         model.addAttribute("board", board);
+
         List<ReplyDetailRespDto> replyDtoList = replyService.getReplyList(board.getId());
         model.addAttribute("replyDtoList", replyDtoList);
+
         return "board/detail";
     }
 

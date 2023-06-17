@@ -16,4 +16,7 @@ insert into reply_tb(comment, board_id, user_id, created_at) values('댓글1', 2
 insert into reply_tb(comment, board_id, user_id, created_at) values('댓글1', 1, 3, now());
 insert into reply_tb(comment, board_id, user_id, created_at) values('댓글1', 2, 3, now());
 
+insert into love_tb(board_id,user_id,created_at) values(1,1,now());
+insert into love_tb(board_id,user_id,created_at) values(1,2,now());
+
 commit;

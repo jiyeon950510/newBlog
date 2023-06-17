@@ -2,6 +2,9 @@ package shop.mtcoding.newblog.handler.ex;
 
 import org.springframework.http.HttpStatus;
 
+import lombok.Getter;
+
+@Getter
 public class CustomException extends RuntimeException {
 
     private HttpStatus status;

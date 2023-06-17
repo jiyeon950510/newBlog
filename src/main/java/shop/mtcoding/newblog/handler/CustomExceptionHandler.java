@@ -13,12 +13,13 @@ import shop.mtcoding.newblog.util.Script;
 public class CustomExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
-    public String CustomException(CustomException e) {
-        return Script.back(e.getMessage());
+    public ResponseEntity<?> CustomException(CustomException e) {
+        String responseBody = Script.back(e.getMessage());
+        return new ResponseEntity<>(responseBody, e.getStatus());
     }
 
     @ExceptionHandler(CustomApiException.class)
     public ResponseEntity<?> CustomApiException(CustomApiException e) {
-        return new ResponseEntity<>(Script.back(e.getMessage()), e.getStatus());
+        return new ResponseEntity<>(new ResponseDto<>(-1, e.getMessage(), null), e.getStatus());
     }
 }

@@ -1,21 +1,79 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
     <%@ include file="../layout/header.jsp" %>
 
+<%-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --%>
+
+<input type="hidden" id="boardId" value="${board.id}" />
+
             <div class="container my-3">
-            <%-- <c:if test="${dto.userId == principal.id}"> --%>
-                <div class="mb-3">
-                    <a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
-                    <button onclick="deleteById(${board.id})" class="btn btn-danger">삭제</button>
-                </div>
-                <%-- </c:if> --%>
+                <c:if test="${board.userId == principal.id}">
+                    <div class="mb-3">
+                        <a href="/board/${board.id}/updateForm" class="btn btn-warning">수정</a>
+                        <button onclick="deleteById(${board.id})" class="btn btn-danger">삭제</button>
+                    </div>
+                </c:if>
                     <div class="mb-2">
                         글 번호 : <span id="id"><i>${board.id}</i></span> 작성자 : <span><i>${board.username}</i></span>
+                        <c:choose>
+                            <c:when test="${love==null}">
+                                 <i id="heart" class="fa-regular fa-heart fa-lg" value="${love.id}" onClick="loveUpdate()" style="margin-left: 3%;"></i>
+                            </c:when>
+                            
+                            <c:otherwise>
+                                <i id="heart" class="fa-solid fa-heart fa-lg" value="${love.id}" onClick="loveUpdate()" style="margin-left: 3%;"></i>
+                            </c:otherwise>
+                        </c:choose>
+                        
                     </div>
+
+<script>
+    function loveUpdate() {
+        let boardId = $("#boardId").val();
+        let id = $("#heart").attr("value");
+
+        if (id=="") {
+
+            let data = {boardId:boardId}
+            
+            $.ajax({
+                type: "post",
+                url: "/love",
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json"
+            }).done((res) => { // 20X 일때
+                $("#heart").attr("value",res.data);
+                $("#heart").addClass("fa-solid");
+                $("#heart").removeClass("fa-regular");
+             
+            }).fail((err) => {
+                alert(err.responseJSON.msg);
+            });
+
+        } 
+        else {
+                        
+           $.ajax({
+                type: "delete",
+                url: "/love/" + id,
+                dataType: "json"
+            }).done((res) => { // 20X 일때
+                $("#heart").attr("value",res.data);
+                $("#heart").removeClass("fa-solid");
+                $("#heart").addClass("fa-regular");
+            }).fail((err) => { // 40X, 50X 일때
+                alert(err.responseJSON.msg);
+                });
+        }
+
+    }
+</script>
+                
 
                     <div>
                         <h3>${board.title}</h3>
                     </div>
-                    <hr />
+                <hr />
                     <div>
                         <div>${board.content}</div>
                     </div>
@@ -40,7 +98,9 @@
                                 <div>${reply.comment}</div>
                                 <div class="d-flex">
                                     <div class="font-italic">작성자 : ${reply.username} &nbsp;</div>
-                                    <button onClick="deleteReply(${reply.id})" class="badge bg-danger">삭제</button>
+                                    <c:if test="${principal.id==reply.userId}" >
+                                        <button onClick="deleteReply(${reply.id})" class="badge bg-danger">삭제</button>
+                                    </c:if>
                                 </div>
                             </li>
                         </c:forEach>
