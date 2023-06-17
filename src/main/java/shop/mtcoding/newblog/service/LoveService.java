@@ -29,6 +29,8 @@ public class LoveService {
             throw new CustomApiException("좋아요 내역이 존재하지 않습니다", HttpStatus.BAD_REQUEST);
         }
 
+        System.out.println("테스트 삭제 love 유저아이디: " + lovePS.getUserId());
+        System.out.println("테스트 삭제 love 아이디: " + lovePS.getId());
         if (lovePS.getUserId() != principalId) {
             throw new CustomApiException("좋아요 취소 권한이 없습니다.", HttpStatus.BAD_REQUEST);
         }
