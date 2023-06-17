@@ -28,7 +28,7 @@
 ![글-수정](https://github.com/jiyeon950510/buyer3/assets/122354247/e9d1d9d0-4b25-4043-a3b7-07e5fc51b67d)
 
 ### 2단계
-댓글쓰기, 댓글목록보기, 댓글삭제
+#### 댓글쓰기, 댓글목록보기, 댓글삭제
 ![댓글_등록_삭제](https://github.com/jiyeon950510/newBlog/assets/122354247/28eb3d80-c06a-4130-adac-f55543f243ae)
 
 프로필사진추가및변경하기, 프로필사진보기
