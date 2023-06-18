@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import shop.mtcoding.newblog.dto.ResponseDto;
 import shop.mtcoding.newblog.dto.user.UserReq.JoinReqDto;
 import shop.mtcoding.newblog.dto.user.UserReq.LoginReqDto;
+import shop.mtcoding.newblog.dto.user.UserReq.UpdateReqDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.User;
@@ -32,6 +33,28 @@ public class UserController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+
+    @PostMapping("/user/update")
+    public String update(UpdateReqDto updateReqDto) {
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null) {
+            throw new CustomException("잘못된 접근입니다. 로그인 후 이용해주세요", HttpStatus.UNAUTHORIZED);
+        }
+        if (updateReqDto.getUsername() == null || updateReqDto.getUsername().isEmpty()) {
+            throw new CustomException("username을 작성해주세요");
+        }
+
+        if (updateReqDto.getPassword() == null || updateReqDto.getPassword().isEmpty()) {
+            throw new CustomException("password을 작성해주세요");
+        }
+        if (updateReqDto.getEmail() == null || updateReqDto.getEmail().isEmpty()) {
+            throw new CustomException("email을 작성해주세요");
+        }
+
+        userService.회원정보수정(updateReqDto, principal.getId());
+
+        return "redirect:/login";
+    }
 
     @PostMapping("/user/profileUpdate")
     public String profileUpdate(MultipartFile profile) {
@@ -54,8 +77,14 @@ public class UserController {
         return "redirect:/";
     }
 
-    @GetMapping("user/updateForm")
-    public String updateForm() {
+    @GetMapping("/user/updateForm")
+    public String updateForm(Model model) {
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null) {
+            throw new CustomException("잘못된 접근입니다. 로그인 후 이용해주세요", HttpStatus.UNAUTHORIZED);
+        }
+        model.addAttribute("userPS", principal);
+
         return "user/updateForm";
     }
 

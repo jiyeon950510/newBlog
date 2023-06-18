@@ -3,20 +3,17 @@
 
 <div class="container my-3">
         <div class="container">
-            <form action="" method="post">
+            <form action="/user/update" method="post">
                 <div class="form-group mb-2">
-                    <input type="text" name="username" class="form-control" placeholder="Enter username" id="username"
-                        value="ssar">
+                    <input type="text" name="username" class="form-control" value="${userPS.username}" id="username">
                 </div>
 
                 <div class="form-group mb-2">
-                    <input type="password" name="password" class="form-control" placeholder="Enter password"
-                        id="password" value="1234">
+                    <input type="password" name="password" class="form-control" value="${userPS.password}" id="password">
                 </div>
 
                 <div class="form-group mb-2">
-                    <input type="email" name="email" class="form-control" placeholder="Enter email" id="email"
-                        value="ssar@nate.com">
+                    <input type="email" name="email" class="form-control" value="${userPS.email}" id="email">
                 </div>
 
                 <button type="submit" class="btn btn-primary">회원수정</button>
@@ -24,5 +21,6 @@
 
         </div>
     </div>
+
 
 <%@ include file="../layout/footer.jsp" %>

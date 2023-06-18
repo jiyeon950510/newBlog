@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import shop.mtcoding.newblog.dto.user.UserReq.JoinReqDto;
 import shop.mtcoding.newblog.dto.user.UserReq.LoginReqDto;
+import shop.mtcoding.newblog.dto.user.UserReq.UpdateReqDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.User;
@@ -20,6 +21,20 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Transactional
+    public void 회원정보수정(UpdateReqDto updateReqDto, int principalId) {
+        User userPS = userRepository.findById(principalId);
+        if (userPS == null) {
+            throw new CustomException("회원정보가 존재하지 않습니다.");
+        }
+        try {
+            userRepository.updateById(userPS.getId(), updateReqDto.getUsername(), updateReqDto.getPassword(),
+                    updateReqDto.getEmail(), userPS.getProfile(), userPS.getCreatedAt());
+        } catch (Exception e) {
+            throw new CustomException("update 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @Transactional
     public void 회원가입(JoinReqDto joinReqDto) {
