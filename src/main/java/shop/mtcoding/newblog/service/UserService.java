@@ -12,6 +12,7 @@ import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.User;
 import shop.mtcoding.newblog.model.UserRepository;
+import shop.mtcoding.newblog.util.PasswordHash;
 import shop.mtcoding.newblog.util.PathUtil;
 
 @Service
@@ -22,14 +23,16 @@ public class UserService {
 
     @Transactional
     public void 회원가입(JoinReqDto joinReqDto) {
+
         User sameUser = userRepository.findByUsername(joinReqDto.getUsername());
         if (sameUser != null) {
             throw new CustomException("동일한 username이 존재합니다");
         }
-        if (joinReqDto.getPassword() != joinReqDto.getPasswordCheck()) {
+        if (!joinReqDto.getPassword().equals(joinReqDto.getPasswordCheck())) {
             throw new CustomException("password 가 일치하지 않습니다");
         }
-        int result = userRepository.insert(joinReqDto.getUsername(), joinReqDto.getPassword(), joinReqDto.getEmail());
+        String password = PasswordHash.getPasswordHash(joinReqDto.getPassword());
+        int result = userRepository.insert(joinReqDto.getUsername(), password, joinReqDto.getEmail());
         if (result != 1) {
             throw new CustomException("회원가입실패");
         }
@@ -37,8 +40,10 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public User 로그인(LoginReqDto loginReqDto) {
+        String password = PasswordHash.getPasswordHash(loginReqDto.getPassword());
+
         User principal = userRepository.findByUsernameAndPassword(
-                loginReqDto.getUsername(), loginReqDto.getPassword());
+                loginReqDto.getUsername(), password);
         if (principal == null) {
             throw new CustomException("유저네임 혹은 패스워드가 잘못 입력되었습니다.");
         }

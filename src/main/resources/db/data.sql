@@ -1,5 +1,5 @@
-INSERT INTO user_tb(username, password, email, profile, created_at) values('ssar', '1234', 'ssar@nate.com','/images/dm.png', now());
-INSERT INTO user_tb(username, password, email, profile, created_at) values('love', '1234', 'love@nate.com','/images/dm.png', now());
+INSERT INTO user_tb(username, password, email, profile, created_at) values('ssar', '937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244', 'ssar@nate.com','/images/dm.png', now());
+INSERT INTO user_tb(username, password, email, profile, created_at) values('love', '937e8d5fbb48bd4949536cd65b8d35c426b80d2f830c5c308e2cdec422ae2244', 'love@nate.com','/images/dm.png', now());
 
 
 INSERT INTO board_tb(title, content, thumbnail, user_id, created_at) values('1번째 제목', '1번째 내용','/images/dm.png', 1, now());
