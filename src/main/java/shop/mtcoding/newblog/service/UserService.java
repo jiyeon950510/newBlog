@@ -24,11 +24,14 @@ public class UserService {
     public void 회원가입(JoinReqDto joinReqDto) {
         User sameUser = userRepository.findByUsername(joinReqDto.getUsername());
         if (sameUser != null) {
-            throw new CustomApiException("동일한 username이 존재합니다");
+            throw new CustomException("동일한 username이 존재합니다");
+        }
+        if (joinReqDto.getPassword() != joinReqDto.getPasswordCheck()) {
+            throw new CustomException("password 가 일치하지 않습니다");
         }
         int result = userRepository.insert(joinReqDto.getUsername(), joinReqDto.getPassword(), joinReqDto.getEmail());
         if (result != 1) {
-            throw new CustomApiException("회원가입실패");
+            throw new CustomException("회원가입실패");
         }
     }
 
@@ -46,7 +49,7 @@ public class UserService {
     public User 프로필사진수정(int principalId, MultipartFile profile) {
         User userPS = userRepository.findById(principalId);
         if (userPS == null) {
-            throw new CustomApiException("회원정보가 존재하지 않습니다.");
+            throw new CustomException("회원정보가 존재하지 않습니다.");
         }
 
         String uuidImageName = PathUtil.writeImageFile(profile);
