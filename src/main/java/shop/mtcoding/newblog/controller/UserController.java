@@ -62,11 +62,11 @@ public class UserController {
     @PostMapping("/login")
     public String login(LoginReqDto loginReqDto) {
         if (loginReqDto.getUsername() == null || loginReqDto.getUsername().isEmpty()) {
-            throw new CustomApiException("username을 작성해주세요");
+            throw new CustomException("username을 작성해주세요");
         }
 
         if (loginReqDto.getPassword() == null || loginReqDto.getPassword().isEmpty()) {
-            throw new CustomApiException("password을 작성해주세요");
+            throw new CustomException("password을 작성해주세요");
         }
         User principal = userService.로그인(loginReqDto);
         session.setAttribute("principal", principal);
@@ -82,15 +82,19 @@ public class UserController {
     public String join(JoinReqDto joinReqDto) {
 
         if (joinReqDto.getUsername() == null || joinReqDto.getUsername().isEmpty()) {
-            throw new CustomApiException("username을 작성해주세요");
+            throw new CustomException("username을 작성해주세요");
+        }
+        User userPS = userRepository.findByUsername(joinReqDto.getUsername());
+        if (userPS != null) {
+            throw new CustomException("동일한 username 이 존재합니다");
         }
 
         if (joinReqDto.getPassword() == null || joinReqDto.getPassword().isEmpty()) {
-            throw new CustomApiException("password을 작성해주세요");
+            throw new CustomException("password을 작성해주세요");
         }
 
         if (joinReqDto.getEmail() == null || joinReqDto.getEmail().isEmpty()) {
-            throw new CustomApiException("email을 작성해주세요");
+            throw new CustomException("email을 작성해주세요");
         }
         userService.회원가입(joinReqDto);
         return "redirect:/loginForm";
