@@ -4,8 +4,9 @@
 <div class="container my-3">
         <div class="container">
             <form action="/login" method="post">
-                <div class="form-group mb-2">
-                    <input type="text" name="username" class="form-control" placeholder="Enter username" id="username">
+                <div class="form-group mb-1">
+                    <input type="text" name="username" class="form-control" value="${remember}" placeholder="Enter username" id="username">
+                    유저네임을 기억할까요? <input type="checkbox" name="remember" ${remember != "" ? 'checked' : ''}><br />
                 </div>
 
                 <div class="form-group mb-2">

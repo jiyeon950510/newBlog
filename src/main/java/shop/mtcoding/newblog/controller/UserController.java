@@ -1,5 +1,8 @@
 package shop.mtcoding.newblog.controller;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.h2.engine.SysProperties;
@@ -53,7 +56,7 @@ public class UserController {
 
         userService.회원정보수정(updateReqDto, principal.getId());
 
-        return "redirect:/login";
+        return "redirect:/user/updateForm";
     }
 
     @PostMapping("/user/profileUpdate")
@@ -83,13 +86,14 @@ public class UserController {
         if (principal == null) {
             throw new CustomException("잘못된 접근입니다. 로그인 후 이용해주세요", HttpStatus.UNAUTHORIZED);
         }
-        model.addAttribute("userPS", principal);
+        User userPS = userRepository.findById(principal.getId());
+        model.addAttribute("userPS", userPS);
 
         return "user/updateForm";
     }
 
     @PostMapping("/login")
-    public String login(LoginReqDto loginReqDto) {
+    public String login(LoginReqDto loginReqDto, String remember, HttpServletResponse response) {
         if (loginReqDto.getUsername() == null || loginReqDto.getUsername().isEmpty()) {
             throw new CustomException("username을 작성해주세요");
         }
@@ -98,12 +102,34 @@ public class UserController {
             throw new CustomException("password을 작성해주세요");
         }
         User principal = userService.로그인(loginReqDto);
+
+        if (remember == null) {
+            remember = "";
+        }
+
+        if (remember.equals("on")) {
+            Cookie cookie = new Cookie("remember", loginReqDto.getUsername());
+            response.addCookie(cookie);
+        } else {
+            Cookie cookie = new Cookie("remember", "");
+            response.addCookie(cookie);
+        }
         session.setAttribute("principal", principal);
         return "redirect:/";
     }
 
     @GetMapping("loginForm")
-    public String loginForm() {
+    public String loginForm(HttpServletRequest request) {
+
+        String username = "";
+
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("remember")) {
+                username = cookie.getValue();
+            }
+        }
+        request.setAttribute("remember", username);
         return "user/loginForm";
     }
 

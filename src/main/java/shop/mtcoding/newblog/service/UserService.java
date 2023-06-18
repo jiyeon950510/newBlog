@@ -28,12 +28,14 @@ public class UserService {
         if (userPS == null) {
             throw new CustomException("회원정보가 존재하지 않습니다.");
         }
+
         try {
-            userRepository.updateById(userPS.getId(), updateReqDto.getUsername(), updateReqDto.getPassword(),
+            userRepository.updateById(principalId, updateReqDto.getUsername(), updateReqDto.getPassword(),
                     updateReqDto.getEmail(), userPS.getProfile(), userPS.getCreatedAt());
         } catch (Exception e) {
             throw new CustomException("update 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
     }
 
     @Transactional
