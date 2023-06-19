@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import shop.mtcoding.newblog.dto.ResponseDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardSaveReqDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.newblog.dto.board.BoardResp.BoardDetailRespDto;
+import shop.mtcoding.newblog.dto.board.BoardResp.BoardListRespDto;
 import shop.mtcoding.newblog.dto.reply.ReplyResp.ReplyDetailRespDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
 import shop.mtcoding.newblog.handler.ex.CustomException;
@@ -32,6 +34,7 @@ import shop.mtcoding.newblog.model.LoveRepository;
 import shop.mtcoding.newblog.model.User;
 import shop.mtcoding.newblog.service.BoardService;
 import shop.mtcoding.newblog.service.ReplyService;
+import shop.mtcoding.newblog.util.PagingVO;
 
 @Controller
 public class BoardController {
@@ -139,8 +142,28 @@ public class BoardController {
     }
 
     @GetMapping({ "/", "board" })
-    public String main(Model model) {
+    public String main(Model model, BoardListRespDto boardListRespDto,
+            @RequestParam(defaultValue = "1", value = "nowPage", required = false) String nowPage,
+            @RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
+
         model.addAttribute("dtos", boardRepository.findAllWithUser());
+
+        int total = boardRepository.countBoard();
+        if (nowPage == null && cntPerPage == null) {
+            nowPage = "1";
+            cntPerPage = "8";
+        } else if (nowPage == null) {
+            nowPage = "1";
+        } else if (cntPerPage == null) {
+            cntPerPage = "8";
+        }
+        PagingVO vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+        // Integer.parseInt(nowPage) 문자열 정수 변환
+        model.addAttribute("paging", vo);
+
+        List<BoardListRespDto> boardList = boardRepository.findAllWithPaging(vo);
+        model.addAttribute("boardList", boardList);
+
         return "board/main";
     }
 }

@@ -5,6 +5,21 @@
 
 <mapper namespace="shop.mtcoding.newblog.model.BoardRepository">
 
+    <select id="findAllWithPaging" resultType="shop.mtcoding.newblog.dto.board.BoardResp$BoardListRespDto">
+         SELECT * FROM (
+            SELECT ROWNUM RN, A.* FROM (
+                select bt.id, bt.title, bt.content, bt.thumbnail, bt.user_id, ut.username
+                        from board_tb bt
+                        inner join user_tb ut
+                        on bt.user_id = ut.id
+                ORDER BY id DESC ) A) 
+        WHERE RN BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="countBoard" resultType="int">
+        SELECT COUNT(*) FROM BOARD_TB
+    </select>
+
     <select id="findAll" resultType="shop.mtcoding.newblog.model.Board">
         select * from board_tb
     </select>

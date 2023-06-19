@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Param;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardSaveReqDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.newblog.dto.board.BoardResp.BoardDetailRespDto;
+import shop.mtcoding.newblog.dto.board.BoardResp.BoardListRespDto;
 import shop.mtcoding.newblog.dto.board.BoardResp.BoardMainRespDto;
+import shop.mtcoding.newblog.util.PagingVO;
 
 @Mapper
 public interface BoardRepository {
@@ -27,4 +29,10 @@ public interface BoardRepository {
         public int deleteById(int id);
 
         public BoardDetailRespDto findByIdWithUser(int id);
+
+        // 게시물 총 갯수
+        public int countBoard();
+
+        // 페이징 처리 게시글 조회
+        public List<BoardListRespDto> findAllWithPaging(PagingVO vo);
 }
