@@ -46,6 +46,8 @@
 * 회원수정하기
 ![녹화_2023_06_18_19_14_31_972](https://github.com/jiyeon950510/newBlog/assets/122354247/72cc7cb2-e306-4211-b4d7-5351774d5d18)
 * 아이디 기억하기
+![아이디-기억하기](https://github.com/jiyeon950510/newBlog/assets/122354247/dafbbdbe-e40d-4f78-a161-d5ded3406216)
+
 
 ### 5단계
 * 페이징
