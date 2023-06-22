@@ -1,5 +1,6 @@
 # Blog 프로젝트
 
+
 ## 기술스택
   <img src="https://img.shields.io/badge/JDK 11-0094F5?style=for-the-badge&logo=openjdk&logoColor=black?labelColor=white"> <img src="https://img.shields.io/badge/Springboot 2.7.8-6DB33F?style=for-the-badge&logo=springboot&logoColor=black"> <img src="https://img.shields.io/badge/MyBatis-4B5562?style=for-the-badge&logoColor=black"> <img src="https://img.shields.io/badge/h2-9999FF?style=for-the-badge&logoColor=black"> <img src="https://img.shields.io/badge/JSP-4398CC?style=for-the-badge&logoColor=black">
   
@@ -12,44 +13,47 @@
 ### 3단계
 - Love
 
-## 기능정리
+## 개발단계
 ### 1단계
 * 회원가입
-![회원가입](https://github.com/jiyeon950510/newBlog/assets/122354247/8da6316c-9184-4cd6-89e8-b1812b5b35cf)
 * 로그인
-![로그인](https://github.com/jiyeon950510/newBlog/assets/122354247/6d241b08-75fa-430a-a918-64fe7865f688)
 * 글쓰기
-![글쓰기](https://github.com/jiyeon950510/newBlog/assets/122354247/9e2d5c2a-63be-4e9e-97b0-7cdeeab5dc66)
 * 글 목록보기-글 상세보기
-![글-목록_-상세보기](https://github.com/jiyeon950510/newBlog/assets/122354247/f63c5cc7-0da4-403e-9f66-bd84948de3cb)
 * 글삭제
-![글-삭제](https://github.com/jiyeon950510/buyer3/assets/122354247/cd923334-e0de-4dc3-9f32-3cfdb412308e)
 * 글수정
-![글-수정](https://github.com/jiyeon950510/buyer3/assets/122354247/e9d1d9d0-4b25-4043-a3b7-07e5fc51b67d)
 
 ### 2단계
 * 댓글쓰기, 댓글목록보기, 댓글삭제
-![덧글-등록_삭제](https://github.com/jiyeon950510/newBlog/assets/122354247/58a8168f-140f-4f58-9932-03b8c39e18af)
 * 프로필사진추가및변경하기, 프로필사진보기
-![녹화_2023_06_17_19_37_41_781](https://github.com/jiyeon950510/newBlog/assets/122354247/0e12bffa-b636-4952-89ad-632e41120322)
-
 
 ### 3단계
 * 좋아요하기, 좋아요취소, 좋아요보기
-![녹화_2023_06_18_05_22_56_433](https://github.com/jiyeon950510/newBlog/assets/122354247/0cecb705-481b-4a33-8a32-92e416187c99)
-
 
 ### 4단계
 * 아이디중복체크, 비밀번호 ckeck
-![녹화_2023_06_18_17_35_21_973](https://github.com/jiyeon950510/newBlog/assets/122354247/725994a2-d4da-486f-947c-d688d7768e98)
 * 비밀번호 암호화
 * 회원수정하기
-![녹화_2023_06_18_19_14_31_972](https://github.com/jiyeon950510/newBlog/assets/122354247/72cc7cb2-e306-4211-b4d7-5351774d5d18)
 * 아이디 기억하기
-![아이디-기억하기](https://github.com/jiyeon950510/newBlog/assets/122354247/dafbbdbe-e40d-4f78-a161-d5ded3406216)
-
 
 ### 5단계
 * 페이징
 * 검색
 
+## 구현 영상
+* 회원가입, 로그인
+https://github.com/jiyeon950510/newBlog/assets/122354247/b5c70bca-3ba2-4915-9c01-48cf492dfaeb
+
+* 게시글
+https://github.com/jiyeon950510/newBlog/assets/122354247/60579bc7-e2aa-48b5-8629-ac10e06ccfcd
+
+* 좋아요, 댓글
+https://github.com/jiyeon950510/newBlog/assets/122354247/6036aa86-100c-4df9-b41d-5fa00f818cd4
+
+* 썸네일, 개인정보 변경
+https://github.com/jiyeon950510/newBlog/assets/122354247/eea9d37e-4344-4a5a-b7de-d7f6e8327574
+
+* 페이징
+https://github.com/jiyeon950510/newBlog/assets/122354247/837cfcc3-0eac-4be9-81aa-657318206540
+
+* 검색
+https://github.com/jiyeon950510/newBlog/assets/122354247/f9751c02-ca0c-47ae-8ccf-f918769b03f7
