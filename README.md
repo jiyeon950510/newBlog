@@ -41,19 +41,19 @@
 
 ## 구현 영상
 * 회원가입, 로그인
-https://github.com/jiyeon950510/newBlog/assets/122354247/b5c70bca-3ba2-4915-9c01-48cf492dfaeb
+![회원가입, 로그인](https://github.com/jiyeon950510/newBlog/assets/122354247/89ade6aa-d5a9-4276-b58b-a15bb574d00f)
 
 * 게시글
-https://github.com/jiyeon950510/newBlog/assets/122354247/60579bc7-e2aa-48b5-8629-ac10e06ccfcd
+![게시글](https://github.com/jiyeon950510/newBlog/assets/122354247/0bc02e8b-9c70-4156-befe-41c0bbee322e)
 
 * 좋아요, 댓글
-https://github.com/jiyeon950510/newBlog/assets/122354247/6036aa86-100c-4df9-b41d-5fa00f818cd4
+![좋아요,댓글](https://github.com/jiyeon950510/newBlog/assets/122354247/b31f5eb4-cb16-43d1-bb5c-154b9f973042)
 
 * 썸네일, 개인정보 변경
-https://github.com/jiyeon950510/newBlog/assets/122354247/eea9d37e-4344-4a5a-b7de-d7f6e8327574
+![썸네일,개인정보](https://github.com/jiyeon950510/newBlog/assets/122354247/f9aec143-3b32-43d2-801d-82de6814362e)
 
 * 페이징
-https://github.com/jiyeon950510/newBlog/assets/122354247/837cfcc3-0eac-4be9-81aa-657318206540
+![페이징](https://github.com/jiyeon950510/newBlog/assets/122354247/8f8945d4-4198-4536-a4d6-5358a2101658)
 
 * 검색
-https://github.com/jiyeon950510/newBlog/assets/122354247/f9751c02-ca0c-47ae-8ccf-f918769b03f7
+![검색](https://github.com/jiyeon950510/newBlog/assets/122354247/feb4e06f-2982-48f2-9f11-02cacb56cb12)
