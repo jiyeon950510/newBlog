@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
-import shop.mtcoding.newblog.dto.board.BoardReq.BoardSaveReqDto;
 import shop.mtcoding.newblog.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.newblog.dto.board.BoardResp.BoardDetailRespDto;
 import shop.mtcoding.newblog.dto.board.BoardResp.BoardListRespDto;
@@ -20,7 +19,7 @@ public interface BoardRepository {
 
         public Board findById(int id);
 
-        public int insert(@Param("boardSaveReqDto") BoardSaveReqDto boardSaveReqDto, @Param("userId") int userId,
+        public int insert(@Param("title") String title, @Param("content") String content, @Param("userId") int userId,
                         @Param("thumbnail") String thumbnail);
 
         public int updateById(@Param("id") int id, @Param("boardUpdateReqDto") BoardUpdateReqDto boardUpdateReqDto,
@@ -31,8 +30,8 @@ public interface BoardRepository {
         public BoardDetailRespDto findByIdWithUser(int id);
 
         // 게시물 총 갯수
-        public int countBoard();
+        public int countBoard(String search);
 
         // 페이징 처리 게시글 조회
-        public List<BoardListRespDto> findAllWithPaging(PagingVO vo);
+        public List<BoardListRespDto> findAllWithPaging(@Param("vo") PagingVO vo, @Param("search") String search);
 }

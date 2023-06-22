@@ -143,12 +143,13 @@ public class BoardController {
 
     @GetMapping({ "/", "board" })
     public String main(Model model, BoardListRespDto boardListRespDto,
+            @RequestParam(value = "search", required = false) String search,
             @RequestParam(defaultValue = "1", value = "nowPage", required = false) String nowPage,
             @RequestParam(value = "cntPerPage", required = false) String cntPerPage) {
 
         model.addAttribute("dtos", boardRepository.findAllWithUser());
 
-        int total = boardRepository.countBoard();
+        int total = boardRepository.countBoard(search);
         if (nowPage == null && cntPerPage == null) {
             nowPage = "1";
             cntPerPage = "8";
@@ -161,9 +162,10 @@ public class BoardController {
         // Integer.parseInt(nowPage) 문자열 정수 변환
         model.addAttribute("paging", vo);
 
-        List<BoardListRespDto> boardList = boardRepository.findAllWithPaging(vo);
+        List<BoardListRespDto> boardList = boardRepository.findAllWithPaging(vo, search);
         model.addAttribute("boardList", boardList);
 
+        model.addAttribute("search", search);
         return "board/main";
     }
 }

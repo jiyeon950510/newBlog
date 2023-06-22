@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import shop.mtcoding.newblog.dto.ResponseDto;
 import shop.mtcoding.newblog.handler.ex.CustomApiException;
+import shop.mtcoding.newblog.handler.ex.CustomException;
 import shop.mtcoding.newblog.model.User;
 import shop.mtcoding.newblog.service.ReplyService;
 
@@ -40,7 +41,7 @@ public class ReplyController {
     public String save(@PathVariable int id, String comment) {
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
-            throw new CustomApiException("인증이 되지 않았습니다");
+            throw new CustomException("인증이 되지 않았습니다");
         }
         replyService.save(comment, id, principal.getId());
         return "redirect:/board/" + id;

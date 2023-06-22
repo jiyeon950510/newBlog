@@ -122,11 +122,13 @@
                         }
 
                         function deleteReply(replyId) {
+                            let boardId = $("#boardId").val();
                             $.ajax({
                                 type: "delete",
                                 url: "/reply/" + replyId,
                                 dataType: "json"
                             }).done((res) => { // 20X 일때
+                                console.log(boardId);
                                 alert(res.msg);
                                 location.href = "/board/"+boardId;
                             }).fail((err) => { // 40X, 50X 일때

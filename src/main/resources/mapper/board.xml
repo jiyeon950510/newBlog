@@ -5,6 +5,14 @@
 
 <mapper namespace="shop.mtcoding.newblog.model.BoardRepository">
 
+    <sql id="criteria">
+            <choose>
+                <when test="search!=null">
+                    where (title like '%'||#{search}||'%' or content like '%'||#{search}||'%')
+                </when>
+            </choose>
+    </sql>
+
     <select id="findAllWithPaging" resultType="shop.mtcoding.newblog.dto.board.BoardResp$BoardListRespDto">
          SELECT * FROM (
             SELECT ROWNUM RN, A.* FROM (
@@ -12,12 +20,13 @@
                         from board_tb bt
                         inner join user_tb ut
                         on bt.user_id = ut.id
-                ORDER BY id DESC ) A) 
-        WHERE RN BETWEEN #{start} AND #{end}
+                        <include refid="criteria"></include>
+                ORDER BY id DESC ) A
+            ) WHERE RN BETWEEN #{vo.start} AND #{vo.end}
     </select>
 
     <select id="countBoard" resultType="int">
-        SELECT COUNT(*) FROM BOARD_TB
+        SELECT COUNT(*) FROM BOARD_TB <include refid="criteria"></include>
     </select>
 
     <select id="findAll" resultType="shop.mtcoding.newblog.model.Board">
@@ -29,7 +38,7 @@
     </select>    
 
     <insert id="insert">
-        insert into board_tb (title, content, thumbnail, user_id, created_at) values(#{boardSaveReqDto.title}, #{boardSaveReqDto.content}, #{thumbnail}, #{userId}, now())
+        insert into board_tb (title, content, thumbnail, user_id, created_at) values(#{title}, #{content}, #{thumbnail}, #{userId}, now())
     </insert>    
 
     <delete id="deleteById" >

@@ -24,8 +24,8 @@ public class BoardService {
 
         String thumbnail = HtmlParser.getThumbnail(boardSaveReqDto.getContent());
 
-        int result = boardRepository.insert(boardSaveReqDto,
-                userId, thumbnail);
+        int result = boardRepository.insert(
+                boardSaveReqDto.getTitle(), boardSaveReqDto.getContent(), userId, thumbnail);
         if (result != 1) {
             throw new CustomApiException("글쓰기 실패", HttpStatus.INTERNAL_SERVER_ERROR);
         }
